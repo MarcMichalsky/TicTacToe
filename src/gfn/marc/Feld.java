@@ -84,4 +84,12 @@ public class Feld {
     public boolean isGesetzt() {
         return gesetzt;
     }
+
+    public void setGesetzt(boolean gesetzt) {
+        this.gesetzt = gesetzt;
+    }
+
+    public void setFeldId(int feldId) {
+        this.feldId = feldId;
+    }
 }

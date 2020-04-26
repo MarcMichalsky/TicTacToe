@@ -1,30 +1,35 @@
 package gfn.marc;
 
-import java.awt.*;
+import gfn.marc.gui.Fenster;
+
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 
 public class Zug {
 
-    private static Frame f;
-    private static Spielfeld spielfeld;
+    private static Fenster f = TicTacToe.getF();
+    private static Spielfeld spielfeld = f.getSpielfeld();
     private static int zugNummer = 0;
+    private static Spieler spieler;
     private static boolean zugLaeuft;
     private static CustomMouseListener[] cmls = new CustomMouseListener[9];
 
     public Zug() {
-        Zug.spielfeld = TicTacToe.getSpielfeld();
-        Zug.f = TicTacToe.getF();
         createMouseListeners();
+    }
+
+    public static void setZugNummer(int zugNummer) {
+        Zug.zugNummer = zugNummer;
     }
 
     // Zuganzahl hochzählen und Titelleiste setzen
     public static void macheZug(Spieler spieler) {
+        Zug.spieler = spieler;
         if (zugNummer == 9) {
             Zug.zugNummer = 0;
         }
         Zug.zugNummer++;
-        f.setTitle(spieler.getName() + " ist dran!");
+        Zug.f.setzeTitel(spieler.getName() + " ist dran!");
         Zug.setZugLaeuft(true);
 
 
@@ -58,6 +63,11 @@ public class Zug {
         }
     }
 
+    public static void restartZug() {
+        macheZug(Zug.spieler);
+        Zug.zugNummer--;
+    }
+
     public static int getZugNummer() {
         return zugNummer;
     }
@@ -70,31 +80,15 @@ public class Zug {
         Zug.zugLaeuft = zugLaeuft;
     }
 
-    public static void setF(Frame f) {
-        Zug.f = f;
-    }
-
-    public static void setSpielfeld(Spielfeld spielfeld) {
-        Zug.spielfeld = spielfeld;
-    }
-
-    public static void setZugNummer(int zugNummer) {
-        Zug.zugNummer = zugNummer;
-    }
-
-    public static void setCmls(CustomMouseListener[] cmls) {
-        Zug.cmls = cmls;
-    }
 }
 
+class CustomMouseListener extends MouseAdapter {
 
-class CustomMouseListener implements MouseListener {
-
-    private Frame f;
+    private Fenster f;
     private Feld feld;
     private Spieler spieler;
 
-    public CustomMouseListener(Frame f, Feld feld) {
+    public CustomMouseListener(Fenster f, Feld feld) {
         this.f = f;
         this.feld = feld;
     }
@@ -107,29 +101,7 @@ class CustomMouseListener implements MouseListener {
     @Override
     public void mouseClicked(MouseEvent mouseEvent) {
         this.feld.setZeichen(spieler.getForm());
-        f.repaint();
         Zug.setZugLaeuft(false);
-    }
-
-    // notwendige Implementierungen ohne weitere Funktion
-    @Override
-    public void mousePressed(MouseEvent mouseEvent) {
-
-    }
-
-    @Override
-    public void mouseReleased(MouseEvent mouseEvent) {
-
-    }
-
-    @Override
-    public void mouseEntered(MouseEvent mouseEvent) {
-
-    }
-
-    @Override
-    public void mouseExited(MouseEvent mouseEvent) {
-
     }
 }
 

@@ -37,6 +37,22 @@ public abstract class Form {
         return para4;
     }
 
+    public void increasePara1(int x) {
+        this.para1 += x;
+    }
+
+    public void increasePara2(int x) {
+        this.para2 += x;
+    }
+
+    public void increasePara3(int x) {
+        this.para3 += x;
+    }
+
+    public void increasePara4(int x) {
+        this.para4 += x;
+    }
+
     public boolean isSichtbar() {
         return sichtbar;
     }

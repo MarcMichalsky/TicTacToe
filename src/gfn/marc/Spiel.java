@@ -1,17 +1,17 @@
 package gfn.marc;
 
+import gfn.marc.gui.Fenster;
+
 import javax.swing.*;
-import java.awt.*;
 
 public class Spiel {
 
     private static Spieler spieler1;
     private static Spieler spieler2;
-    private Frame f;
-    private Spielfeld spielfeld;
+    private final Fenster f;
 
 
-    Spiel(Frame f, Spielfeld spielfeld) throws InterruptedException {
+    Spiel(Fenster f) throws InterruptedException {
 
         this.f = f;
 
@@ -106,18 +106,14 @@ public class Spiel {
         }
     }
 
-// Neues Spielfeld anlegen
-        this.spielfeld =spielfeld;
-
-
 }
 
     public boolean spielen() {
 
         // Züge durchführen
         try {
-            Zug zug = new Zug();
             // Zufälliger Spieler startet
+            new Zug();
             double startSpieler = Math.random();
             while (Gewinner.ermittleGewinner(this) == null && Zug.getZugNummer() < 9) {
                 if (Zug.getZugNummer() % 2 == 0) {
@@ -136,7 +132,7 @@ public class Spiel {
             }
             f.repaint();
             Thread.sleep(500);
-            f.setTitle(Spiel.spieler1.getName() + ": " + Spiel.spieler1.getPunktestand() + "  |  " +
+            f.setzeTitel(Spiel.spieler1.getName() + ": " + Spiel.spieler1.getPunktestand() + "  |  " +
                     Spiel.spieler2.getName() + ": " + Spiel.spieler2.getPunktestand());
             if (Gewinner.getSpieler() == null) {
                 // Noch ein Spiel?
@@ -155,16 +151,15 @@ public class Spiel {
         return false;
     }
 
-
-    public Spielfeld getSpielfeld() {
-        return spielfeld;
-    }
-
     public Spieler getSpieler1() {
         return spieler1;
     }
 
     public Spieler getSpieler2() {
         return spieler2;
+    }
+
+    public Fenster getF() {
+        return f;
     }
 }
