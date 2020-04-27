@@ -15,20 +15,20 @@ public class TicTacToe {
         // Laden der Spielstände
         Speicher.spielstaendeEinlesen();
 
-        f = new Fenster();
-        f.macheSichtbar(true);
-
         // Spiel starten
         try {
             boolean nochEinSpiel = true;
             while (nochEinSpiel) {
 
-                f.newSpielfeld();
+                f = null;
+                f = new Fenster();
                 nochEinSpiel = new Spiel(f).spielen();
 
                 // aufräumen
+                f.setVisible(false);
                 Gewinner.setSpieler(null);
                 Zug.setZugNummer(0);
+
             }
         } catch (InterruptedException ie) {
             System.err.println("Da ist was schief gelaufen!");

@@ -3,7 +3,6 @@ package gfn.marc.gui;
 import gfn.marc.Feld;
 import gfn.marc.Speicher;
 import gfn.marc.Spielfeld;
-import gfn.marc.Zug;
 
 import javax.swing.*;
 import java.awt.*;
@@ -68,10 +67,9 @@ public class Fenster extends JFrame implements ActionListener {
         });
         this.setLocationRelativeTo(null);
         this.setResizable(false);
-
-
         this.getContentPane().add(this.myPanel);
         this.spielfeld = new Spielfeld(this);
+        this.setVisible(true);
     }
 
     public void hinzufuegen(Component c) {
@@ -85,14 +83,6 @@ public class Fenster extends JFrame implements ActionListener {
         if (object.getSource() == loescheSpielstaende) {
             System.out.println("Lösche Spielstände wurde angeklickt");
         }
-    }
-
-    public void newSpielfeld() {
-
-    }
-
-    public void macheSichtbar(boolean sichtbar) {
-        this.setVisible(sichtbar);
     }
 
     public void setzeTitel(String titel) {
