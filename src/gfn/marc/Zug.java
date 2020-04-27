@@ -10,7 +10,6 @@ public class Zug {
     private static Spielfeld spielfeld;
     private static int zugNummer = 0;
     private static boolean zugLaeuft;
-    private static CustomMouseListener[] cmls = new CustomMouseListener[9];
     private static Spieler spieler;
 
     public Zug() {
@@ -64,22 +63,11 @@ public class Zug {
         Zug.zugLaeuft = zugLaeuft;
     }
 
-    public static void setF(Frame f) {
-        Zug.f = f;
-    }
-
-    public static void setSpielfeld(Spielfeld spielfeld) {
-        Zug.spielfeld = spielfeld;
-    }
-
     public static void setZugNummer(int zugNummer) {
         Zug.zugNummer = zugNummer;
     }
 
-    public static void setCmls(CustomMouseListener[] cmls) {
-        Zug.cmls = cmls;
-    }
-
+    // Lokale Klasse für CustomMouseListener
     static class CustomMouseListener extends MouseAdapter {
 
         int i;
