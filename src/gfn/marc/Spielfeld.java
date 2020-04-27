@@ -63,7 +63,11 @@ public class Spielfeld {
             felderNeu[i].getKreuz().setSichtbar(felder[i].getKreuz().isSichtbar());
             felderNeu[i].setGesetzt(felder[i].isGesetzt());
             felderNeu[i].setFeldId(felder[i].getFeldId());
+            if (felder[i].isGesetzt()) {
+                felderNeu[i].getLabel().removeMouseListener(felderNeu[i].getMouseListener());
+            }
         }
+
         this.felder = felderNeu;
     }
 }
