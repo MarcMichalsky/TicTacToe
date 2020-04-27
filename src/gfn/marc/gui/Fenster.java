@@ -13,11 +13,10 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
 
-public class Fenster extends JPanel implements ActionListener {
+public class Fenster extends JFrame implements ActionListener {
 
-    private final JFrame fenster;
-    private MyPanel myPanel;
-    private Spielfeld spielfeld;
+    private final MyPanel myPanel;
+    private final Spielfeld spielfeld;
     private int fenstergroesse;
 
     // Menüleiste
@@ -27,11 +26,11 @@ public class Fenster extends JPanel implements ActionListener {
     private JMenu optionen;
 
     // Datei
-    private JMenuItem optionFenstergroesse;
-    private JMenuItem loescheSpielstaende;
+    private final JMenuItem optionFenstergroesse;
+    private final JMenuItem loescheSpielstaende;
 
     public Fenster() {
-        this.fenster = new JFrame("Tic Tac Toe");
+        this.setzeTitel("Tic Tac Toe");
         this.fenstergroesse = 600;
         this.myPanel = new MyPanel();
 
@@ -54,10 +53,10 @@ public class Fenster extends JPanel implements ActionListener {
         this.optionen.add(optionFenstergroesse);
         this.optionen.add(loescheSpielstaende);
 
-        this.fenster.add(menue, BorderLayout.NORTH);
+        this.add(menue, BorderLayout.NORTH);
 
-        this.fenster.setSize(fenstergroesse, fenstergroesse + 50);
-        this.fenster.addWindowListener(new WindowAdapter() {
+        this.setSize(fenstergroesse, fenstergroesse + 50);
+        this.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
                 try {
                     Speicher.spielstaendeSpeichern();
@@ -67,12 +66,16 @@ public class Fenster extends JPanel implements ActionListener {
                 System.exit(0); // sofortiges Programmende
             }
         });
-        this.fenster.setLocationRelativeTo(null);
-        this.fenster.setResizable(false);
+        this.setLocationRelativeTo(null);
+        this.setResizable(false);
+
+
+        this.getContentPane().add(this.myPanel);
+        this.spielfeld = new Spielfeld(this);
     }
 
     public void hinzufuegen(Component c) {
-        myPanel.add(c);
+    myPanel.add(c);
     }
 
     public void actionPerformed(ActionEvent object) {
@@ -85,30 +88,22 @@ public class Fenster extends JPanel implements ActionListener {
     }
 
     public void newSpielfeld() {
-        this.myPanel = null;
-        this.spielfeld = null;
-        this.myPanel = new MyPanel();
-        this.fenster.getContentPane().add(this.myPanel);
-        this.spielfeld = new Spielfeld(this);
+
     }
 
     public void macheSichtbar(boolean sichtbar) {
-        this.fenster.setVisible(sichtbar);
+        this.setVisible(sichtbar);
     }
 
     public void setzeTitel(String titel) {
-        this.fenster.setTitle(titel);
+        this.setTitle(titel);
     }
 
     public void setzeFenstergroesse(int fenstergroesse) {
         this.fenstergroesse = fenstergroesse;
-        this.fenster.setSize(fenstergroesse, fenstergroesse + 50);
+        this.setSize(fenstergroesse, fenstergroesse + 50);
         this.spielfeld.resizeFelder(fenstergroesse);
         this.myPanel.repaint();
-    }
-
-    public MyPanel getMyPanel() {
-        return myPanel;
     }
 
     public Spielfeld getSpielfeld() {
