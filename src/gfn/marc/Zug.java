@@ -1,8 +1,8 @@
 package gfn.marc;
 
 import java.awt.*;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 
 public class Zug {
 
@@ -11,15 +11,16 @@ public class Zug {
     private static int zugNummer = 0;
     private static boolean zugLaeuft;
     private static CustomMouseListener[] cmls = new CustomMouseListener[9];
+    private static Spieler spieler;
 
     public Zug() {
         Zug.spielfeld = TicTacToe.getSpielfeld();
         Zug.f = TicTacToe.getF();
-        createMouseListeners();
     }
 
     // Zuganzahl hochzählen und Titelleiste setzen
     public static void macheZug(Spieler spieler) {
+        Zug.spieler = spieler;
         if (zugNummer == 9) {
             Zug.zugNummer = 0;
         }
@@ -31,8 +32,7 @@ public class Zug {
         // Mouselistener auf Felder setzen, die noch nicht gesetzt wurden
         for (int i = 0; i < spielfeld.getFelder().length; i++) {
             if (!spielfeld.getFelder()[i].isGesetzt()) {
-                cmls[i].setSpieler(spieler);
-                spielfeld.getFelder()[i].getLabel().addMouseListener(cmls[i]);
+                spielfeld.getFelder()[i].getLabel().addMouseListener(new CustomMouseListener(i));
             }
         }
 
@@ -47,15 +47,9 @@ public class Zug {
 
         // MouseListener von allen Feldern entfernen
         for (int i = 0; i < spielfeld.getFelder().length; i++) {
-            spielfeld.getFelder()[i].getLabel().removeMouseListener(cmls[i]);
+            spielfeld.getFelder()[i].getLabel().removeMouseListener(new CustomMouseListener(i));
         }
 
-    }
-
-    public static void createMouseListeners() {
-        for (int i = 0; i < spielfeld.getFelder().length; i++) {
-            cmls[i] = new CustomMouseListener(f, spielfeld.getFelder()[i]);
-        }
     }
 
     public static int getZugNummer() {
@@ -85,52 +79,28 @@ public class Zug {
     public static void setCmls(CustomMouseListener[] cmls) {
         Zug.cmls = cmls;
     }
+
+    static class CustomMouseListener extends MouseAdapter {
+
+        int i;
+
+        public CustomMouseListener(int i) {
+            this.i = i;
+        }
+
+        // Auf Setzen des Feldes prüfen und ggf. Form zeichnen lassen
+        @Override
+        public void mouseClicked(MouseEvent mouseEvent) {
+            spielfeld.getFelder()[i].setZeichen(spieler.getForm());
+            f.repaint();
+            Zug.setZugLaeuft(false);
+        }
+    }
+
 }
 
 
-class CustomMouseListener implements MouseListener {
 
-    private Frame f;
-    private Feld feld;
-    private Spieler spieler;
 
-    public CustomMouseListener(Frame f, Feld feld) {
-        this.f = f;
-        this.feld = feld;
-    }
-
-    public void setSpieler(Spieler spieler) {
-        this.spieler = spieler;
-    }
-
-    // Auf Setzen des Feldes prüfen und ggf. Form zeichnen lassen
-    @Override
-    public void mouseClicked(MouseEvent mouseEvent) {
-        this.feld.setZeichen(spieler.getForm());
-        f.repaint();
-        Zug.setZugLaeuft(false);
-    }
-
-    // notwendige Implementierungen ohne weitere Funktion
-    @Override
-    public void mousePressed(MouseEvent mouseEvent) {
-
-    }
-
-    @Override
-    public void mouseReleased(MouseEvent mouseEvent) {
-
-    }
-
-    @Override
-    public void mouseEntered(MouseEvent mouseEvent) {
-
-    }
-
-    @Override
-    public void mouseExited(MouseEvent mouseEvent) {
-
-    }
-}
 
 
