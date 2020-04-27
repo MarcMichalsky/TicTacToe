@@ -121,10 +121,6 @@ public class Fenster extends JPanel implements ActionListener {
 
     class MyPanel extends JPanel {
 
-        public MyPanel() {
-            super();
-        }
-
         public void paintComponent(Graphics g) {
 
             Graphics2D g2 = (Graphics2D) g;
