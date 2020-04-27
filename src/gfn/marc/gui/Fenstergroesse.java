@@ -111,7 +111,6 @@ public class Fenstergroesse extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 frame.dispose();
-                Zug.restartZug();
             }
         });
         this.buttonZuruecksetzen.addActionListener(new ActionListener() {

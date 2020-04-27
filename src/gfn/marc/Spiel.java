@@ -9,6 +9,7 @@ public class Spiel {
     private static Spieler spieler1;
     private static Spieler spieler2;
     private final Fenster f;
+    private static Zug zug;
 
 
     Spiel(Fenster f) throws InterruptedException {
@@ -113,20 +114,22 @@ public class Spiel {
         // Züge durchführen
         try {
             // Zufälliger Spieler startet
-            new Zug();
             double startSpieler = Math.random();
             while (Gewinner.ermittleGewinner(this) == null && Zug.getZugNummer() < 9) {
+                if (zug == null || !zug.isZugLaeuft()) {
+                    zug = new Zug();
+                } 
                 if (Zug.getZugNummer() % 2 == 0) {
                     if (startSpieler <= 0.5d) {
-                        Zug.macheZug(spieler1);
+                        zug.macheZug(spieler1);
                     } else {
-                        Zug.macheZug(spieler2);
+                        zug.macheZug(spieler2);
                     }
                 } else {
                     if (startSpieler > 0.5d) {
-                        Zug.macheZug(spieler1);
+                        zug.macheZug(spieler1);
                     } else {
-                        Zug.macheZug(spieler2);
+                        zug.macheZug(spieler2);
                     }
                 }
             }
@@ -161,5 +164,9 @@ public class Spiel {
 
     public Fenster getF() {
         return f;
+    }
+
+    public static Zug getZug() {
+        return Spiel.zug;
     }
 }
