@@ -9,6 +9,7 @@ public class Spiel {
     private static Spieler spieler2;
     private Frame f;
     private Spielfeld spielfeld;
+    public static Zug zug;
 
 
     Spiel(Frame f, Spielfeld spielfeld) throws InterruptedException {
@@ -37,7 +38,7 @@ public class Spiel {
                 }
             }
             // Wenn der eingegebene Spielername vorhanden ist
-            if ( eingabe != null && !eingabe.equals("")) {
+            if (eingabe != null && !eingabe.equals("")) {
                 for (Spieler spieler : Spieler.getSpieler()) {
                     if (spieler != null) {
                         if (eingabe.equals(spieler.getName())) {
@@ -81,56 +82,56 @@ public class Spiel {
                 }
             }
 
-        // Wenn der eingegebene Spielername vorhanden ist
-        if (eingabe != null && !eingabe.equals("")) {
-            for (Spieler spieler : Spieler.getSpieler()) {
-                if (spieler != null) {
-                    if (eingabe.equals(spieler.getName())) {
-                        spieler2 = spieler;
-                        spieler2.setForm(new Kreis());
-                        break;
+            // Wenn der eingegebene Spielername vorhanden ist
+            if (eingabe != null && !eingabe.equals("")) {
+                for (Spieler spieler : Spieler.getSpieler()) {
+                    if (spieler != null) {
+                        if (eingabe.equals(spieler.getName())) {
+                            spieler2 = spieler;
+                            spieler2.setForm(new Kreis());
+                            break;
+                        }
                     }
                 }
+                // Wenn kein Spielername eingegeben wurde
+            } else {
+                spieler2 = new Spieler();
+                spieler2.setForm(new Kreis());
+                spieler2.setName("Spieler2");
             }
-            // Wenn kein Spielername eingegeben wurde
-        } else {
-            spieler2 = new Spieler();
-            spieler2.setForm(new Kreis());
-            spieler2.setName("Spieler2");
+            // Wenn ein neuer Spielername eingegeben wurde
+            if (spieler2 == null) {
+                spieler2 = new Spieler();
+                spieler2.setForm(new Kreis());
+                spieler2.setName(eingabe);
+            }
         }
-        // Wenn ein neuer Spielername eingegeben wurde
-        if (spieler2 == null) {
-            spieler2 = new Spieler();
-            spieler2.setForm(new Kreis());
-            spieler2.setName(eingabe);
-        }
-    }
 
 // Neues Spielfeld anlegen
-        this.spielfeld =spielfeld;
+        this.spielfeld = spielfeld;
 
 
-}
+    }
 
     public boolean spielen() {
 
         // Züge durchführen
         try {
-            Zug zug = new Zug();
             // Zufälliger Spieler startet
             double startSpieler = Math.random();
             while (Gewinner.ermittleGewinner(this) == null && Zug.getZugNummer() < 9) {
+                Spiel.zug = new Zug();
                 if (Zug.getZugNummer() % 2 == 0) {
                     if (startSpieler <= 0.5d) {
-                        Zug.macheZug(spieler1);
+                        zug.macheZug(spieler1);
                     } else {
-                        Zug.macheZug(spieler2);
+                        zug.macheZug(spieler2);
                     }
                 } else {
                     if (startSpieler > 0.5d) {
-                        Zug.macheZug(spieler1);
+                        zug.macheZug(spieler1);
                     } else {
-                        Zug.macheZug(spieler2);
+                        zug.macheZug(spieler2);
                     }
                 }
             }

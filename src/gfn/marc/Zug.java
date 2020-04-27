@@ -1,90 +1,59 @@
 package gfn.marc;
 
 import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
 public class Zug {
 
-    private static Frame f;
-    private static Spielfeld spielfeld;
+    private Frame f;
     private static int zugNummer = 0;
-    private static boolean zugLaeuft;
-    private static Spieler spieler;
+    private boolean zugLaeuft;
+    private Spieler spieler;
 
     public Zug() {
-        Zug.spielfeld = TicTacToe.getSpielfeld();
-        Zug.f = TicTacToe.getF();
+        this.f = TicTacToe.getF();
     }
 
     // Zuganzahl hochzählen und Titelleiste setzen
-    public static void macheZug(Spieler spieler) {
-        Zug.spieler = spieler;
-        if (zugNummer == 9) {
+    public void macheZug(Spieler spieler) {
+        this.spieler = spieler;
+        if (Zug.zugNummer == 9) {
             Zug.zugNummer = 0;
         }
         Zug.zugNummer++;
         f.setTitle(spieler.getName() + " ist dran!");
-        Zug.setZugLaeuft(true);
-
-
-        // Mouselistener auf Felder setzen, die noch nicht gesetzt wurden
-        for (int i = 0; i < spielfeld.getFelder().length; i++) {
-            if (!spielfeld.getFelder()[i].isGesetzt()) {
-                spielfeld.getFelder()[i].getLabel().addMouseListener(new CustomMouseListener(i));
-            }
-        }
+        this.setZugLaeuft(true);
 
         // Auf setzen eines Feldes warten
-        while (Zug.isZugLaeuft()) {
+        while (this.isZugLaeuft()) {
             try {
                 Thread.sleep(200);
             } catch (InterruptedException ie) {
                 break;
             }
         }
-
-        // MouseListener von allen Feldern entfernen
-        for (int i = 0; i < spielfeld.getFelder().length; i++) {
-            spielfeld.getFelder()[i].getLabel().removeMouseListener(new CustomMouseListener(i));
-        }
+        f.repaint();
 
     }
 
     public static int getZugNummer() {
-        return zugNummer;
+        return Zug.zugNummer;
     }
 
-    public static boolean isZugLaeuft() {
-        return zugLaeuft;
+    public boolean isZugLaeuft() {
+        return this.zugLaeuft;
     }
 
-    public static void setZugLaeuft(boolean zugLaeuft) {
-        Zug.zugLaeuft = zugLaeuft;
+    public void setZugLaeuft(boolean zugLaeuft) {
+        this.zugLaeuft = zugLaeuft;
     }
 
     public static void setZugNummer(int zugNummer) {
         Zug.zugNummer = zugNummer;
     }
 
-    // Lokale Klasse für CustomMouseListener
-    static class CustomMouseListener extends MouseAdapter {
-
-        int i;
-
-        public CustomMouseListener(int i) {
-            this.i = i;
-        }
-
-        // Auf Setzen des Feldes prüfen und ggf. Form zeichnen lassen
-        @Override
-        public void mouseClicked(MouseEvent mouseEvent) {
-            spielfeld.getFelder()[i].setZeichen(spieler.getForm());
-            f.repaint();
-            Zug.setZugLaeuft(false);
-        }
+    public Spieler getSpieler() {
+        return this.spieler;
     }
-
 }
 
 
