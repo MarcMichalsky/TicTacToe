@@ -12,11 +12,6 @@ public class Zug {
     private static int zugNummer = 0;
     private static Spieler spieler;
     private static boolean zugLaeuft;
-    private static CustomMouseListener[] cmls = new CustomMouseListener[9];
-
-    public Zug() {
-        createMouseListeners();
-    }
 
     public static void setZugNummer(int zugNummer) {
         Zug.zugNummer = zugNummer;
@@ -36,8 +31,7 @@ public class Zug {
         // Mouselistener auf Felder setzen, die noch nicht gesetzt wurden
         for (int i = 0; i < spielfeld.getFelder().length; i++) {
             if (!spielfeld.getFelder()[i].isGesetzt()) {
-                cmls[i].setSpieler(spieler);
-                spielfeld.getFelder()[i].getLabel().addMouseListener(cmls[i]);
+                spielfeld.getFelder()[i].getLabel().addMouseListener(new CustomMouseListener(i));
             }
         }
 
@@ -52,14 +46,25 @@ public class Zug {
 
         // MouseListener von allen Feldern entfernen
         for (int i = 0; i < spielfeld.getFelder().length; i++) {
-            spielfeld.getFelder()[i].getLabel().removeMouseListener(cmls[i]);
+            spielfeld.getFelder()[i].getLabel().removeMouseListener(new CustomMouseListener(i));
         }
 
     }
 
-    public static void createMouseListeners() {
-        for (int i = 0; i < spielfeld.getFelder().length; i++) {
-            cmls[i] = new CustomMouseListener(f, spielfeld.getFelder()[i]);
+    // Lokale Klasse für CustomMouseListener
+    static class CustomMouseListener extends MouseAdapter {
+
+        int i;
+
+        public CustomMouseListener(int i) {
+            this.i = i;
+        }
+
+        // Auf Setzen des Feldes prüfen und ggf. Form zeichnen lassen
+        @Override
+        public void mouseClicked(MouseEvent mouseEvent) {
+            spielfeld.getFelder()[i].setZeichen(spieler.getForm());
+            Zug.setZugLaeuft(false);
         }
     }
 
@@ -80,29 +85,6 @@ public class Zug {
         Zug.zugLaeuft = zugLaeuft;
     }
 
-}
-
-class CustomMouseListener extends MouseAdapter {
-
-    private Fenster f;
-    private Feld feld;
-    private Spieler spieler;
-
-    public CustomMouseListener(Fenster f, Feld feld) {
-        this.f = f;
-        this.feld = feld;
-    }
-
-    public void setSpieler(Spieler spieler) {
-        this.spieler = spieler;
-    }
-
-    // Auf Setzen des Feldes prüfen und ggf. Form zeichnen lassen
-    @Override
-    public void mouseClicked(MouseEvent mouseEvent) {
-        this.feld.setZeichen(spieler.getForm());
-        Zug.setZugLaeuft(false);
-    }
 }
 
 
