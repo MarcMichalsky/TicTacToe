@@ -1,6 +1,9 @@
 package gfn.marc;
 
 import javax.swing.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 public class Feld {
     private static int feldAnzahl = 0;
@@ -39,6 +42,19 @@ public class Feld {
                 ((int) (rechteck.getPara3() * 0.8)),
                 ((int) (rechteck.getPara4() * 0.8)));
 
+        this.label.addMouseListener(new CustomMouseListener());
+
+    }
+
+    // Lokale Klasse für CustomMouseListener
+    class CustomMouseListener extends MouseAdapter {
+
+        // Auf Setzen des Feldes prüfen und ggf. Form zeichnen lassen
+        @Override
+        public void mouseClicked(MouseEvent mouseEvent) {
+            setZeichen(Spiel.getZug().getSpieler().getForm());
+            Spiel.getZug().setZugLaeuft(false);
+        }
     }
 
     public void setZeichen(Form form) {
@@ -91,5 +107,11 @@ public class Feld {
 
     public void setFeldId(int feldId) {
         this.feldId = feldId;
+    }
+
+    public MouseListener getMouseListener() {
+        if (this.getLabel().getMouseListeners().length != 0) {
+            return this.getLabel().getMouseListeners()[this.getLabel().getMouseListeners().length - 1];
+        } else return null;
     }
 }
