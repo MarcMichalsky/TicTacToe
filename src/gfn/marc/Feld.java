@@ -81,16 +81,8 @@ public class Feld {
         return kreuz;
     }
 
-    public void setKreuz(Kreuz kreuz) {
-        this.kreuz = kreuz;
-    }
-
     public Kreis getKreis() {
         return kreis;
-    }
-
-    public void setKreis(Kreis kreis) {
-        this.kreis = kreis;
     }
 
     public int getFeldId() {
