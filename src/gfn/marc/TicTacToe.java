@@ -8,7 +8,6 @@ import java.io.IOException;
 public class TicTacToe {
 
     static Fenster f;
-    static Spiel spiel;
     static boolean DEBUG = true;
 
     public static void main(String[] args) throws IOException {
@@ -25,13 +24,11 @@ public class TicTacToe {
             while (nochEinSpiel) {
 
                 f.newSpielfeld();
-                spiel = new Spiel(f);
-                nochEinSpiel = spiel.spielen();
+                nochEinSpiel = new Spiel(f).spielen();
 
                 // aufräumen
                 Gewinner.setSpieler(null);
                 Zug.setZugNummer(0);
-                spiel = null;
             }
         } catch (InterruptedException ie) {
             System.err.println("Da ist was schief gelaufen!");
