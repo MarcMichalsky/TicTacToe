@@ -116,7 +116,7 @@ public class Spiel {
             // Zufälliger Spieler startet
             double startSpieler = Math.random();
             while (Gewinner.ermittleGewinner(this) == null && Zug.getZugNummer() < 9) {
-                if (zug == null || !zug.isZugLaeuft()) {
+                if (zug == null || !Zug.isZugLaeuft()) {
                     zug = new Zug();
                 } 
                 if (Zug.getZugNummer() % 2 == 0) {

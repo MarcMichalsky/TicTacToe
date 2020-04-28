@@ -24,7 +24,7 @@ public class Zug {
     public void macheZug(Spieler spieler) {
         this.spieler = spieler;
         this.f.setzeTitel(spieler.getName() + " ist dran!");
-        this.setZugLaeuft(true);
+        Zug.setZugLaeuft(true);
 
         // Auf setzen eines Feldes warten
         while (Zug.isZugLaeuft()) {
@@ -48,7 +48,7 @@ public class Zug {
         return Zug.zugLaeuft;
     }
 
-    public void setZugLaeuft(boolean zugLaeuft) {
+    public static void setZugLaeuft(boolean zugLaeuft) {
         Zug.zugLaeuft = zugLaeuft;
     }
 

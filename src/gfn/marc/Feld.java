@@ -102,10 +102,4 @@ public class Feld {
     public void setFeldId(int feldId) {
         this.feldId = feldId;
     }
-
-    public MouseListener getMouseListener() {
-        if (this.getLabel().getMouseListeners().length != 0) {
-            return this.getLabel().getMouseListeners()[this.getLabel().getMouseListeners().length - 1];
-        } else return null;
-    }
 }
