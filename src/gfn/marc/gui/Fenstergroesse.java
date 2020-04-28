@@ -1,7 +1,5 @@
 package gfn.marc.gui;
 
-import gfn.marc.Zug;
-
 import java.awt.*;
 import java.awt.event.*;
 
@@ -38,7 +36,7 @@ public class Fenstergroesse extends JFrame {
     }
 
     private void initialisiereKomponenten() {
-        this.labelErgebnis = new JLabel("600 × 600");
+        this.labelErgebnis = new JLabel(hauptfenster.getFenstergroesse() + " × " + hauptfenster.getFenstergroesse());
         this.schiebereglerFenstergroesse = this.erstelleSchieberegler(300, 900);
         this.buttonOkay = new JButton("Okay");
         this.buttonZuruecksetzen = new JButton("zurücksetzen");
@@ -54,6 +52,7 @@ public class Fenstergroesse extends JFrame {
 
     private JSlider erstelleSchieberegler(int minimum, int maximum) {
         JSlider schieberegler = new JSlider(minimum, maximum);
+        schieberegler.setValue(hauptfenster.getFenstergroesse());
         schieberegler.setPaintLabels(true);
         schieberegler.setPaintTicks(true);
         schieberegler.setMinorTickSpacing(50);
