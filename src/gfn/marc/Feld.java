@@ -3,7 +3,6 @@ package gfn.marc;
 import javax.swing.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 
 public class Feld {
     private static int feldAnzahl = 0;
@@ -54,7 +53,7 @@ public class Feld {
         public void mouseClicked(MouseEvent mouseEvent) {
             if (!gesetzt && Zug.isZugLaeuft()) {
                 setZeichen(Spiel.getZug().getSpieler().getForm());
-                Spiel.getZug().setZugLaeuft(false);
+                Zug.setZugLaeuft(false);
             }
         }
     }
@@ -79,12 +78,24 @@ public class Feld {
         return rechteck;
     }
 
+    public void setRechteck(Rechteck rechteck) {
+        this.rechteck = rechteck;
+    }
+
     public Kreuz getKreuz() {
         return kreuz;
     }
 
+    public void setKreuz(Kreuz kreuz) {
+        this.kreuz = kreuz;
+    }
+
     public Kreis getKreis() {
         return kreis;
+    }
+
+    public void setKreis(Kreis kreis) {
+        this.kreis = kreis;
     }
 
     public int getFeldId() {
