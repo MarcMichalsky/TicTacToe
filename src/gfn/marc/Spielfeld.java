@@ -46,25 +46,47 @@ public class Spielfeld {
         return felder;
     }
 
+    public void reset() {
+        for (int i = 0; i < felder.length; i++) {
+            felder[i].setGesetzt(false);
+            felder[i].getRechteck().setGewinnerFeld(false);
+            felder[i].getKreuz().setSichtbar(false);
+            felder[i].getKreis().setSichtbar(false);
+            f.repaint();
+        }
+    }
     public void resizeFelder(int spielfeldgroesse) {
-        Feld[] felderNeu = new Feld[9];
         int quadrant = (spielfeldgroesse / 3);
         int k = 0;
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
-                felderNeu[k] = new Feld(new Rechteck(((quadrant * j) + KORREKTUR_X), (KORREKTUR_Y + (quadrant * i)),
+                felder[k].setRechteck(new Rechteck(((quadrant * j) + KORREKTUR_X), (KORREKTUR_Y + (quadrant * i)),
                         quadrant, quadrant));
                 k++;
             }
         }
-        for (int i = 0; i < this.felder.length; i++) {
-            felderNeu[i].getRechteck().setGewinnerFeld(felder[i].getRechteck().isGewinnerFeld());
-            felderNeu[i].getKreis().setSichtbar(felder[i].getKreis().isSichtbar());
-            felderNeu[i].getKreuz().setSichtbar(felder[i].getKreuz().isSichtbar());
-            felderNeu[i].setGesetzt(felder[i].isGesetzt());
-            felderNeu[i].setFeldId(felder[i].getFeldId());
+
+        for (int i = 0; i < felder.length; i++) {
+
+            felder[i].getLabel().setBounds((felder[i].getRechteck().getPara1() - Spielfeld.KORREKTUR_X),
+                    (felder[i].getRechteck().getPara2() - Spielfeld.KORREKTUR_Y),
+                    felder[i].getRechteck().getPara3(), felder[i].getRechteck().getPara4());
+            felder[i].getKreis().setPara1((int) (felder[i].getRechteck().getPara1() +
+                    (0.1 * felder[i].getRechteck().getPara3())));
+            felder[i].getKreis().setPara2((int) (felder[i].getRechteck().getPara2() +
+                    (0.1 * felder[i].getRechteck().getPara4())));
+            felder[i].getKreis().setPara3((int) (felder[i].getRechteck().getPara3() * 0.8));
+            felder[i].getKreis().setPara4((int) (felder[i].getRechteck().getPara4() * 0.8));
+
+            felder[i].getKreuz().setPara1((int)(felder[i].getRechteck().getPara1() +
+                    (felder[i].getRechteck().getPara3() * 0.1)));
+            felder[i].getKreuz().setPara2((int) (felder[i].getRechteck().getPara2() +
+                    (felder[i].getRechteck().getPara4() * 0.1)));
+            felder[i].getKreuz().setPara3((int) (felder[i].getRechteck().getPara1() +
+                    (felder[i].getRechteck().getPara3() * 0.9)));
+            felder[i].getKreuz().setPara4((int) (felder[i].getRechteck().getPara2() +
+                    (felder[i].getRechteck().getPara4() * 0.9)));
         }
-        this.felder = felderNeu;
     }
 }
 
