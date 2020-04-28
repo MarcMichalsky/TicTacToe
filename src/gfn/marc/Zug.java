@@ -27,11 +27,11 @@ public class Zug {
         this.setZugLaeuft(true);
 
         // Auf setzen eines Feldes warten
-        while (this.isZugLaeuft()) {
+        while (Zug.isZugLaeuft()) {
             try {
                 Thread.sleep(200);
             } catch (InterruptedException ie) {
-                break;
+                System.err.println("Schleife abgebrochen");
             }
         }
     }
@@ -44,7 +44,7 @@ public class Zug {
         return spieler;
     }
 
-    public boolean isZugLaeuft() {
+    public static boolean isZugLaeuft() {
         return Zug.zugLaeuft;
     }
 

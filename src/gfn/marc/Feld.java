@@ -52,7 +52,7 @@ public class Feld {
         // Auf Setzen des Feldes prüfen und ggf. Form zeichnen lassen
         @Override
         public void mouseClicked(MouseEvent mouseEvent) {
-            if (!gesetzt) {
+            if (!gesetzt && Zug.isZugLaeuft()) {
                 setZeichen(Spiel.getZug().getSpieler().getForm());
                 Spiel.getZug().setZugLaeuft(false);
             }
