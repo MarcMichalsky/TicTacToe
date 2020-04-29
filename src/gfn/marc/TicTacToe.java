@@ -13,7 +13,6 @@ public class TicTacToe {
         @Override
         public void run() {
             try {
-                //f = null;
                 f = new Fenster();
                 boolean nochEinSpiel = true;
                 while (nochEinSpiel) {
@@ -21,11 +20,9 @@ public class TicTacToe {
                     nochEinSpiel = new Spiel(f).spielen();
 
                     // aufräumen
-                    //f.setVisible(false);
                     Gewinner.setSpieler(null);
                     Zug.setZugNummer(0);
                     f.getSpielfeld().reset();
-
                 }
             } catch (InterruptedException ie) {
                 System.err.println("Da ist was schief gelaufen!");

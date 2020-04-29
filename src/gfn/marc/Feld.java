@@ -41,21 +41,17 @@ public class Feld {
                 ((int) (rechteck.getPara3() * 0.8)),
                 ((int) (rechteck.getPara4() * 0.8)));
 
-        this.label.addMouseListener(new CustomMouseListener());
-
-    }
-
-    // Lokale Klasse für CustomMouseListener
-    class CustomMouseListener extends MouseAdapter {
-
-        // Auf Setzen des Feldes prüfen und ggf. Form zeichnen lassen
-        @Override
-        public void mouseClicked(MouseEvent mouseEvent) {
-            if (!gesetzt && Zug.isZugLaeuft()) {
-                setZeichen(Spiel.getZug().getSpieler().getForm());
-                Zug.setZugLaeuft(false);
+        this.label.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                if (!gesetzt && Zug.isZugLaeuft()) {
+                    setZeichen(Spiel.getZug().getSpieler().getForm());
+                    Zug.setZugLaeuft(false);
+                }
             }
-        }
+        });
+
     }
 
     public void setZeichen(Form form) {

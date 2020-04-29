@@ -67,7 +67,6 @@ public class Spielfeld {
         }
 
         for (int i = 0; i < felder.length; i++) {
-
             felder[i].getLabel().setBounds((felder[i].getRechteck().getPara1() - Spielfeld.KORREKTUR_X),
                     (felder[i].getRechteck().getPara2() - Spielfeld.KORREKTUR_Y),
                     felder[i].getRechteck().getPara3(), felder[i].getRechteck().getPara4());

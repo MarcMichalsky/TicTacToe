@@ -15,7 +15,7 @@ import java.io.IOException;
 public class Fenster extends JFrame implements ActionListener {
 
     private final MyPanel myPanel;
-    private final Spielfeld spielfeld;
+    private Spielfeld spielfeld;
     private int fenstergroesse;
 
     // Menüleiste
@@ -32,6 +32,7 @@ public class Fenster extends JFrame implements ActionListener {
         this.setzeTitel("Tic Tac Toe");
         this.fenstergroesse = 600;
         this.myPanel = new MyPanel();
+        this.getContentPane().add(this.myPanel);
 
         // Menüleiste erzeugen
         this.menue = new JMenuBar();
@@ -67,7 +68,6 @@ public class Fenster extends JFrame implements ActionListener {
         });
         this.setLocationRelativeTo(null);
         this.setResizable(false);
-        this.getContentPane().add(this.myPanel);
         this.spielfeld = new Spielfeld(this);
         this.setVisible(true);
     }
